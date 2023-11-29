@@ -1,0 +1,8 @@
+{
+    "name": "github.com/itsonlybinary/kiwiirc-plugin-avatar-upload",
+    "type": "project",
+	"license": "Apache-2.0"
+    "require": {
+        "firebase/php-jwt": "^6.9"
+    }
+}
