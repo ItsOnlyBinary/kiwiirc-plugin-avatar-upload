@@ -16,42 +16,40 @@ kiwi.plugin('asl', (kiwi, log) => {
     }
     kiwi.addUi('userbox_info', AvatarUpload);
 
-    kiwi.on('irc.account', (event, net) => {
+    kiwi.on('irc.account', (event, network) => {
+        const user = kiwi.state.getUser(network.id, event.nick);
+        if (!user) {
+            return;
+        }
+
         if (!event.account) {
             // User has logged out remove our avatars
-            const user = kiwi.state.getUser(net.id, event.nick);
-            if (user) {
-                clearPluginAvatars(user.avatar);
-            }
+            clearPluginAvatars(user.avatar);
         }
 
         kiwi.Vue.nextTick(() => {
-            updateAvatar(net, event.nick, true);
+            updateAvatar(user, true);
         });
     });
 
-    kiwi.on('irc.wholist', (event, net) => {
-        const nicks = event.users.map((user) => user.nick);
+    kiwi.on('irc.wholist', (event, network) => {
         kiwi.Vue.nextTick(() => {
-            nicks.forEach((nick) => {
-                updateAvatar(net, nick, false);
+            event.users.forEach((whoUser) => {
+                const user = kiwi.state.getUser(network.id, whoUser.nick);
+                if (user && user.avatarCache) {
+                    // Only process users that have already used their avatar
+                    // Other users will be handled by the user.avatar.create event
+                    updateAvatar(user, false);
+                }
             });
         });
     });
 
-    kiwi.on('irc.join', (event, net) => {
-        kiwi.Vue.nextTick(() => {
-            updateAvatar(net, event.nick, false);
-        });
+    kiwi.on('user.avatar.create', (event) => {
+        updateAvatar(event.user, false);
     });
 
-    function updateAvatar(network, nick, force = false) {
-        const user = kiwi.state.getUser(network.id, nick);
-        if (!user) {
-            // Could not get the user
-            return;
-        }
-
+    function updateAvatar(user, force = false) {
         if (!user.account) {
             return;
         }
