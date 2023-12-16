@@ -7,7 +7,7 @@ const allowedPrefixes = [
     'kiwi-',
     'u-',
 
-    `${pkgClass}-`,
+    `${pkgClass}`,
 ];
 
 const specialPrefixes = [
@@ -15,12 +15,12 @@ const specialPrefixes = [
     'irc-fg-',
     'irc-bg-',
 
-    // Special exception for google recaptcha -  welcome screen.
+    // Special exception for google recaptcha - welcome screen.
     'g-',
 ];
 
 if (pkgClass !== pkgClassShort) {
-    allowedPrefixes.push(`${pkgClassShort}-`);
+    allowedPrefixes.push(`${pkgClassShort}`);
 }
 
 const prefixes = [...allowedPrefixes, ...specialPrefixes];
