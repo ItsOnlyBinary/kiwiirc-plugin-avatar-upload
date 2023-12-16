@@ -1,6 +1,6 @@
 <template>
-    <div v-if="$parent.isSelf && user.account" class="plugin-avatar-upload">
-        <div class="plugin-avatar-upload-title">
+    <div v-if="$parent.isSelf && user.account" class="p-avatar-upload">
+        <div class="p-avatar-upload-title">
             {{ $t('plugin-avatar-upload:title') }}
         </div>
         <vue-cropper
@@ -8,20 +8,20 @@
             ref="cropper"
             :src="cropperSrc"
             v-bind="cropperOptions"
-            class="plugin-avatar-upload-cropper"
+            class="p-avatar-upload-cropper"
             @error="handleError"
         />
-        <div v-else-if="showUploading" class="plugin-avatar-upload-uploading">
+        <div v-else-if="showUploading" class="p-avatar-upload-uploading">
             {{ $t('plugin-avatar-upload:uploading') }}
         </div>
-        <div v-else-if="postError" class="plugin-avatar-upload-error">
+        <div v-else-if="postError" class="p-avatar-upload-error">
             {{ postError[0] === '_' ? $t('plugin-avatar-upload:' + postError.substring(1)) : postError }}
         </div>
-        <div class="plugin-avatar-upload-input">
+        <div class="p-avatar-upload-input">
             <button type="button" class="u-button u-button-primary" @click="chooseFile">
                 {{ $t('plugin-avatar-upload:choose') }}
             </button>
-            <div class="plugin-avatar-upload-file-name">{{ fileName }}</div>
+            <div class="p-avatar-upload-file-name">{{ fileName }}</div>
             <button
                 type="button"
                 class="u-button u-button-primary"
@@ -184,7 +184,7 @@ export default {
 </script>
 
 <style lang="less">
-.plugin-avatar-upload {
+.p-avatar-upload {
     padding: 0.5em;
     border-bottom: 1px solid var(--brand-midtone);
 
@@ -193,14 +193,14 @@ export default {
     }
 }
 
-.plugin-avatar-upload-title {
+.p-avatar-upload-title {
     font-size: 1.1em;
     font-weight: 900;
     line-height: 1.1em;
     text-align: center;
 }
 
-.plugin-avatar-upload-cropper {
+.p-avatar-upload-cropper {
     width: 100%;
     margin-top: 0.5em;
 
@@ -217,35 +217,36 @@ export default {
     }
 }
 
-.plugin-avatar-upload-uploading,
-.plugin-avatar-upload-error {
+.p-avatar-upload-uploading,
+.p-avatar-upload-error {
     margin-top: 0.5em;
     text-align: center;
 }
 
-.plugin-avatar-upload-uploading {
+.p-avatar-upload-uploading {
     padding: 0.5em;
     font-weight: 700;
     color: var(--brand-primary);
 }
 
-.plugin-avatar-upload-error {
+.p-avatar-upload-error {
     background: #ffbaba;
     border: 2px solid var(--brand-error);
 }
 
-.plugin-avatar-upload-input {
+.p-avatar-upload-input {
     display: flex;
     flex-direction: row;
     margin-top: 0.5em;
 }
 
-.plugin-avatar-upload-file-name {
+.p-avatar-upload-file-name {
     flex-grow: 1;
     align-self: center;
     margin: 0 0.5em;
     overflow-x: hidden;
     text-align: center;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 </style>
